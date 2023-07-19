@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Movies</title>
+    <style>
+        body {
+            background-image: url('/static/logo/image.jpg/');
+            background-repeat: no-repeat;
+            background-size: cover;
+            color: white;
+        }
+
+        .poster-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center; /* Center align the posters */
+            align-items: flex-start; /* Align posters to start from the next line */
+        }
+
+        .poster {
+            margin: 12px;
+            margin-bottom: 20px;
+            flex-basis: calc(25% - 24px);
+        }
+
+        .poster h5 {
+            margin-top: 0;
+            text-align: left;
+            padding: 0 10px;
+        }
+
+        .poster img {
+            width: 250px;
+        }
+
+
+        .center-header {
+            background-color: white;
+            display: flex;
+            justify-content: center;
+            width: 100%;
+            color: black;
+            height: 60px; /* Adjust the height as needed */
+        }
+    </style>
+</head>
+<body>
+    <div class="poster-container">
+        <div>
+            <div style="display: flex; align-items: center;">
+                <div style="width: 500px; height: 400px; background-color: lightgray; display: flex; justify-content: center; align-items: center;">
+                    {% for key, value in user.items %}
+                        {% if key == 'url' %}
+                            <img src="{{ value }}" style="max-width: 100%; max-height: 100%;">
+                        {% endif %}
+                    {% endfor %}
+                </div>
+                <div style="margin-left: 20px;">
+                    {% for key, value in user.items %}
+                        {% if key != 'url' %}
+                            {{ key }} : {{ value }}<br><br>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        <div class="center-header">
+            <h2>Recommended Movies</h2> <!-- Center aligned header -->
+        </div>
+        {% for key, value in output.items %}
+            <div class="poster">
+                <h3>{{ key }}</h3>
+                {% comment %} code to click on movie poster       {% endcomment %}
+                <a href="{% url 'recom' key %}">
+                    <div style="width: 200px; height: 200px; background-color: lightgray; display: flex; justify-content: center; align-items: center;">
+                        <img src="{{ value }}" style="max-width: 100%; max-height: 100%;">
+                    </div>
+                </a>
+            </div>
+        {% endfor %}
+    </div>
+</body>
+</html>
